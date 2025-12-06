@@ -711,3 +711,74 @@ p {
 .lightbox__footer .btn{
   flex-shrink: 0;
 }
+
+/* ========= Ajustements MOBILE ========= */
+@media (max-width: 768px) {
+
+  body {
+    padding-top: 72px;          /* un peu moins d’espace en haut */
+  }
+
+  .container {
+    padding: 0 16px;            /* marges latérales plus petites */
+  }
+
+  /* Header / navbar plus compacte */
+  .site-header__inner {
+    height: auto;
+    padding: 8px 16px;
+    flex-direction: column;     /* logo au-dessus, menu en dessous */
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .brand img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav {
+    flex-wrap: wrap;            /* les liens peuvent passer sur 2 lignes */
+    gap: 10px;
+  }
+
+  .nav a {
+    font-size: 0.8rem;
+    padding: 4px 2px;
+  }
+
+  /* Hero : un peu plus compact */
+  .hero {
+    padding: 16px 0 8px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  /* Galerie : déjà en 1 colonne, on rend les cartes un peu moins hautes */
+  .gallery__item img {
+    height: 190px;
+  }
+
+  /* Lightbox : mieux utiliser la largeur */
+  .lightbox {
+    padding: 12px;
+  }
+
+  .lightbox__inner {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .lightbox__footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .lightbox__footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
