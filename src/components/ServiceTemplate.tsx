@@ -11,14 +11,7 @@ export default function ServiceTemplate({ title, accroche, paragraphs, points, h
     <section style={{ padding: "40px 0" }}>
       {/* HERO block without breadcrumb */}
       <div className="panel" style={{ padding: "28px 24px" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.1fr .9fr",
-            gap: 32,
-            alignItems: "center",
-          }}
-        >
+        <div className="service-hero">
           {/* Texte à gauche */}
           <div>
             <h1 style={{ fontSize: "2rem", fontWeight: 700, marginBottom: 8 }}>{title}</h1>
@@ -43,7 +36,7 @@ export default function ServiceTemplate({ title, accroche, paragraphs, points, h
           </div>
 
           {/* Image à droite (carré + relief) */}
-          <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+          <div className="service-hero__image" style={{ width: "100%", display: "flex", justifyContent: "center" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={heroImageUrl || "/hero.jpg"}
@@ -64,10 +57,16 @@ export default function ServiceTemplate({ title, accroche, paragraphs, points, h
       </div>
 
       {/* CONTENT */}
-      <div className="container" style={{ marginTop: 28, display: "grid", gridTemplateColumns: "2fr 1fr", gap: 28 }}>
+      <div
+        className="container service-layout"
+        style={{ marginTop: 28 }}
+      >
         <div>
           {paragraphs.map((p, i) => (
-            <p key={i} style={{ marginBottom: 14, color: "var(--text-muted)", fontSize: ".98rem", lineHeight: 1.7 }}>
+            <p
+              key={i}
+              style={{ marginBottom: 14, color: "var(--text-muted)", fontSize: ".98rem", lineHeight: 1.7 }}
+            >
               {p}
             </p>
           ))}
@@ -80,14 +79,21 @@ export default function ServiceTemplate({ title, accroche, paragraphs, points, h
           </ul>
         </div>
 
-        <aside className="panel" style={{ padding: 18 }}>
+        <aside className="panel service-side" style={{ padding: 18 }}>
           <h3 style={{ fontWeight: 700, marginBottom: 8 }}>Zone d’intervention</h3>
           <p style={{ color: "var(--text-muted)", fontSize: ".95rem" }}>Bas-Rhin et alentours.</p>
 
           <h3 style={{ fontWeight: 700, marginTop: 16, marginBottom: 8 }}>Contact</h3>
           <p style={{ color: "var(--text-muted)", fontSize: ".95rem" }}>
-            Tél : <a className="underline" href="tel:0645374432">06 45 37 44 32</a><br />
-            Email : <a className="underline" href="mailto:platrerie_voltz@yahoo.fr">platrerie_voltz@yahoo.fr</a>
+            Tél :{" "}
+            <a className="underline" href="tel:0645374432">
+              06 45 37 44 32
+            </a>
+            <br />
+            Email :{" "}
+            <a className="underline" href="mailto:platrerie_voltz@yahoo.fr">
+              platrerie_voltz@yahoo.fr
+            </a>
           </p>
         </aside>
       </div>

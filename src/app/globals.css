@@ -76,10 +76,16 @@ body{
 }
 .nav a:hover::after{ width: 100%; }
 
-/* cache le petit bouton menu (☰) */
-button[aria-label="Toggle menu"], .menu, .hamburger, svg[aria-hidden="true"] {
-  display: none !important;
+/* On cache le hamburger seulement sur écran large (desktop) */
+@media (min-width: 900px) {
+  button[aria-label="Toggle menu"],
+  .menu,
+  .hamburger,
+  svg[aria-hidden="true"] {
+    display: none !important;
+  }
 }
+
 
 /* Dropdown Prestations */
 .dropdown {
@@ -782,3 +788,40 @@ p {
     justify-content: center;
   }
 }
+
+/* ===== Mise en page des prestations (desktop) ===== */
+.service-hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.service-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+}
+
+/* ===== Version mobile ===== */
+@media (max-width: 768px) {
+  .service-hero {
+    grid-template-columns: 1fr;   /* texte puis image en dessous */
+    row-gap: 20px;
+  }
+
+  .service-hero__image img.service-photo {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+  }
+
+  .service-layout {
+    display: block;              /* on empile le texte puis le bloc de droite */
+  }
+
+  .service-side {
+    margin-top: 20px;            /* bloc "Zone d’intervention / Contact" en dessous */
+  }
+}
+
