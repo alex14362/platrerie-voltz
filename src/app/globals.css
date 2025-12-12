@@ -76,13 +76,17 @@ body{
 }
 .nav a:hover::after{ width: 100%; }
 
-/* On cache le hamburger seulement sur écran large (desktop) */
-@media (min-width: 900px) {
-  button[aria-label="Toggle menu"],
-  .menu,
-  .hamburger,
-  svg[aria-hidden="true"] {
-    display: none !important;
+
+/* Mobile : on cache la barre de liens et on montre le burger */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  button[aria-label="Toggle menu"] {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -825,3 +829,127 @@ p {
   }
 }
 
+.nav-desktop {
+  display: flex;
+}
+
+.burger-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .burger-mobile {
+    display: block;
+    font-size: 26px;
+    background: none;
+    border: none;
+  }
+}
+
+
+/* =========================================================
+   NAVBAR MOBILE – FIX FINAL OFFICIEL
+   (À placer TOUT EN BAS de globals.css)
+   ========================================================= */
+
+/* état desktop */
+.nav-desktop {
+  display: flex;
+}
+
+.burger-mobile {
+  display: none;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+
+  /* HEADER : UNE SEULE LIGNE */
+  .site-header {
+    height: 64px;
+  }
+
+  .site-header__inner {
+    height: 64px;
+    flex-direction: row !important; /* empêche l’empilement */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  /* cache la nav desktop */
+  .nav-desktop {
+    display: none;
+  }
+
+  /* burger visible */
+  .burger-mobile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* MENU MOBILE */
+  .mobile-menu {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #ece7df;
+    box-shadow: 0 14px 35px rgba(22, 21, 18, 0.08);
+    z-index: 3000;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    padding: 12px 0;
+  }
+
+  .mobile-item {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .mobile-item:hover {
+    color: var(--brand);
+  }
+
+  /* bouton Prestations */
+  .mobile-prestations {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* sous-menu */
+  .mobile-sub {
+    padding: 6px 0 10px 16px;
+  }
+
+  .mobile-sub li a {
+    display: block;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .mobile-sub li a:hover {
+    color: var(--brand);
+  }
+}
