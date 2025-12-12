@@ -27,7 +27,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
-  // dropdown desktop
+  // Dropdown desktop
   const [hoverOpen, setHoverOpen] = useState(false);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
@@ -64,6 +64,7 @@ export default function Navbar() {
                   Prestations ▾
                 </Link>
 
+                {/* SUBMENU DESKTOP */}
                 <div
                   className="submenu"
                   style={{
@@ -71,16 +72,17 @@ export default function Navbar() {
                     visibility: hoverOpen ? "visible" : "hidden",
                   }}
                 >
-                  <ul>
+                  <ul className="submenu__grid">
                     {SERVICES.map((s) => (
                       <li key={s.href}>
                         <Link href={s.href}>{s.label}</Link>
                       </li>
                     ))}
                   </ul>
-                  <Link href="/prestations" className="submenu__all">
-                    Tout voir
-                  </Link>
+
+                  <div className="submenu__footer">
+                    <Link href="/prestations">Tout voir</Link>
+                  </div>
                 </div>
               </div>
             ) : (
