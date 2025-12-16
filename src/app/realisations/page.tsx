@@ -17,47 +17,66 @@ const PHOTOS: Photo[] = [
     src: "/images/realisations/isolation-avant1.jpg",
     alt: "Isolation des combles avant travaux",
     tags: ["Isolation"],
-    phase: "Avant",
   },
   {
     src: "/images/realisations/isolation-avant2.jpg",
-    alt: "Isolation rampants avant pose",
+    alt: "Isolation des rampants avant pose",
     tags: ["Isolation"],
-    phase: "Avant",
   },
   {
     src: "/images/realisations/isolation-pendant1.jpg",
-    alt: "Isolation en cours – pose de l’isolant",
+    alt: "Isolation en cours avec pose de l’isolant",
     tags: ["Isolation"],
-    phase: "Pendant",
   },
   {
     src: "/images/realisations/isolation-pendant2.jpg",
-    alt: "Pose du pare-vapeur pendant isolation",
+    alt: "Pose du pare-vapeur pendant l’isolation",
     tags: ["Isolation"],
-    phase: "Pendant",
+  },
+  {
+    src: "/images/realisations/isolation-pendant3.jpeg",
+    alt: "Isolation plafond avec pare-vapeur",
+    tags: ["Isolation"],
+  },
+  {
+    src: "/images/realisations/isolation-pendant4.jpeg",
+    alt: "Isolation intérieure avec passage des gaines",
+    tags: ["Isolation"],
+  },
+  {
+    src: "/images/realisations/isolation-pendant5.jpeg",
+    alt: "Isolation plafond en cours avant fermeture",
+    tags: ["Isolation"],
   },
   {
     src: "/images/realisations/isolation-apres1.jpg",
     alt: "Isolation des combles terminée",
     tags: ["Isolation"],
-    phase: "Après",
   },
   {
     src: "/images/realisations/isolation-apres2.jpg",
-    alt: "Finition isolation avec puits de lumière",
+    alt: "Finition isolation",
     tags: ["Isolation"],
-    phase: "Après",
   },
 
   // ===== CLOISONS =====
   {
     src: "/images/realisations/cloisons.jpeg",
-    alt: "Création de cloisons intérieures",
+    alt: "Création de cloisons intérieures en plaques de plâtre",
+    tags: ["Cloisons"],
+  },
+  {
+    src: "/images/realisations/cloisons2.jpeg",
+    alt: "Pose de cloisons en placo",
+    tags: ["Cloisons"],
+  },
+  {
+    src: "/images/realisations/cloisons3.jpeg",
+    alt: "Cloisons intérieures avec bandes en cours",
     tags: ["Cloisons"],
   },
 
-  // ===== ENDUITS =====
+  // ===== ENDUITS DÉCORATIFS =====
   {
     src: "/images/realisations/enduits-decoratifs1.jpeg",
     alt: "Enduit décoratif intérieur",
@@ -68,9 +87,31 @@ const PHOTOS: Photo[] = [
     alt: "Enduit décoratif mural",
     tags: ["Enduits décoratifs"],
   },
+
+  // ===== ENDUITS & FINITIONS =====
   {
     src: "/images/realisations/enduits-finitions.jpeg",
-    alt: "Enduits et finitions murs",
+    alt: "Enduits et finitions murales",
+    tags: ["Enduits & finitions"],
+  },
+  {
+    src: "/images/realisations/enduits-finitions2.jpg",
+    alt: "Préparation des murs avant enduit et plâtrerie",
+    tags: ["Enduits & finitions"],
+  },
+  {
+    src: "/images/realisations/enduits-finitions3.jpg",
+    alt: "Reprise des supports avant finitions",
+    tags: ["Enduits & finitions"],
+  },
+  {
+    src: "/images/realisations/enduits-finitions4.jpg",
+    alt: "Préparation des tableaux de fenêtres avant enduit",
+    tags: ["Enduits & finitions"],
+  },
+  {
+    src: "/images/realisations/enduits-finitions5.jpg",
+    alt: "Préparation des murs en briques avant plâtre",
     tags: ["Enduits & finitions"],
   },
 
@@ -79,18 +120,20 @@ const PHOTOS: Photo[] = [
     src: "/images/realisations/platre-avant.jpeg",
     alt: "Plâtrerie avant travaux",
     tags: ["Plâtre"],
-    phase: "Avant",
+  },
+  {
+    src: "/images/realisations/platre-pendant-manuel.jpeg",
+    alt: "Application manuelle du plâtre",
+    tags: ["Plâtre"],
+  },
+  {
+    src: "/images/realisations/platre-pendant-projection.jpeg",
+    alt: "Projection de plâtre en cours",
+    tags: ["Plâtre"],
   },
   {
     src: "/images/realisations/platre-apres.jpg",
     alt: "Plâtrerie après finition",
-    tags: ["Plâtre"],
-    phase: "Après",
-  },
-
-   {
-    src: "/images/realisations/platre-pendant-projection.jpeg",
-    alt: "Projection de plâtre en cours",
     tags: ["Plâtre"],
   },
 
@@ -109,24 +152,24 @@ const PHOTOS: Photo[] = [
   },
   {
     src: "/images/realisations/puits-led2.jpg",
-    alt: "Éclairage par puits LED",
+    alt: "Éclairage intérieur par puits LED",
     tags: ["Puits LED"],
   },
 
   // ===== STAFF =====
   {
     src: "/images/realisations/staff1.jpeg",
-    alt: "Plafond staff décoratif",
+    alt: "Plafond en staff décoratif",
     tags: ["Staff"],
   },
   {
     src: "/images/realisations/staff2.jpeg",
-    alt: "Staff décoratif plafond",
+    alt: "Décoration en staff intérieur",
     tags: ["Staff"],
   },
   {
     src: "/images/realisations/staff3.jpg",
-    alt: "Travail en staff intérieur",
+    alt: "Travail de staff sur plafond",
     tags: ["Staff"],
   },
 ];
@@ -156,7 +199,6 @@ export default function RealisationsPage() {
     <section className="container" style={{ padding: "40px 0" }}>
       <h1>Nos réalisations</h1>
 
-      {/* Filters */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
         {ALL_TAGS.map((t) => (
           <button
@@ -169,7 +211,6 @@ export default function RealisationsPage() {
         ))}
       </div>
 
-      {/* Gallery */}
       <div className="gallery">
         {filtered.map((p, i) => (
           <button
@@ -186,11 +227,13 @@ export default function RealisationsPage() {
         ))}
       </div>
 
-      {/* Lightbox */}
       {openIndex !== null && (
         <div className="lightbox" onClick={() => setOpenIndex(null)}>
           <div className="lightbox__inner" onClick={(e) => e.stopPropagation()}>
-            <img src={filtered[openIndex].src} alt={filtered[openIndex].alt} />
+            <img
+              src={filtered[openIndex].src}
+              alt={filtered[openIndex].alt}
+            />
             <p>
               {filtered[openIndex].alt}
               {filtered[openIndex].phase && ` — ${filtered[openIndex].phase}`}
