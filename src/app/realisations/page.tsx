@@ -106,7 +106,7 @@ const PHOTOS: Photo[] = [
   },
   {
     src: "/images/realisations/enduits-finitions4.jpg",
-    alt: "Préparation des tableaux de fenêtres avant enduit",
+    alt: "Préparation des fenêtres avant enduit",
     tags: ["Enduits & finitions"],
   },
   {
