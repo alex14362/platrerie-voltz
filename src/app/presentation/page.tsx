@@ -21,9 +21,9 @@ export default function PresentationPage() {
               <p style={{ color: "var(--text-muted)", fontSize: "1rem", lineHeight: 1.7, maxWidth: 640, textAlign: "justify" }}>
                 Entreprise familiale fondée en 2016, nous intervenons dans tout le Bas-Rhin pour vos
                 travaux de plâtrerie, d’isolation et d’aménagement intérieur. Fort d’une longue expérience
-                dans le métier, notre fondateur a consacré toute sa carrière à la plâtrerie, développant
-                un véritable savoir-faire artisanal. Reconnus pour notre travail minutieux et notre souci
-                du détail, nous accordons une attention particulière à chaque chantier pour garantir un
+                dans le métier, Jean-Luc a consacré toute sa carrière à la plâtrerie, développant
+                un véritable savoir-faire artisanal. Reconnus pour son travail minutieux et son souci
+                du détail, Jean-Luc accorde une attention particulière à chaque chantier pour garantir un
                 résultat soigné, durable et à la hauteur de vos attentes.
               </p>
 
