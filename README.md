@@ -4,7 +4,7 @@ Site vitrine professionnel
 
 ## Demo
 
-[platrerie-voltz.vercel.app](https://platrerie-voltz.vercel.app)
+[platrerie-voltz-z2jg.vercel.app](https://platrerie-voltz-z2jg.vercel.app)
 
 ## Pages
 
