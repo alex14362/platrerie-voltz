@@ -14,7 +14,6 @@ export default function PrestationsPage() {
 
   return (
     <>
-      {/* Déclencheur de l’animation */}
       <PageReveal />
 
       <section className="min-h-[50vh] container reveal" style={{ padding: "40px 0" }}>
@@ -22,41 +21,37 @@ export default function PrestationsPage() {
           Nos prestations
         </h1>
 
-        <p className="mb-6" style={{ color: "var(--text-muted)" }}>
+        <p style={{ color: "var(--text-muted)", marginBottom: "1.5rem" }}>
           Découvrez l’ensemble de nos services de plâtrerie.
           Cliquez sur une prestation pour en savoir plus.
         </p>
 
         <ul
-          className="services-list grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger"
-          style={{
-            paddingLeft: 0,
-            listStyle: "none", // ✅ empêche les flèches héritées
-          }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger"
+          style={{ paddingLeft: 0, listStyle: "none" }}
         >
-          {services.map((s) => (
+          {services.map((service) => (
             <li
-              key={s.href}
+              key={service.href}
               style={{
-                position: "relative",
                 background: "#fff",
                 border: "1px solid #e6dfd3",
-                borderRadius: "14px",
+                borderRadius: 14,
                 padding: "18px 20px",
                 boxShadow: "0 8px 20px rgba(0,0,0,0.04)",
                 transition: "transform 0.2s ease, box-shadow 0.2s ease",
               }}
             >
               <Link
-                href={s.href}
+                href={service.href}
                 style={{
                   display: "block",
                   textDecoration: "none",
                   color: "inherit",
                 }}
               >
-                <h2 style={{ color: "var(--brand)", fontWeight: 700, marginBottom: "8px" }}>
-                  {s.name}
+                <h2 style={{ color: "var(--brand)", fontWeight: 700, marginBottom: 8 }}>
+                  {service.name}
                 </h2>
                 <p style={{ fontSize: "0.9rem", color: "var(--text-muted)" }}>
                   Voir la fiche détaillée
