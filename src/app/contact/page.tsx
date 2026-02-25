@@ -1,17 +1,29 @@
 "use client";
-import { useState } from "react";
 
+import { useState } from "react";
 import PageReveal from "@/components/PageReveal";
 
-const FORMSPREE_ID = "mrbyvajg"; // <= ton ID Formspree
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 Mo
+const FORMSPREE_ID = "mrbyvajg";
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
 
+type FormStatus = "idle" | "sending" | "success" | "error";
+
+async function uploadFile(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/api/upload", { method: "POST", body: formData });
+  const json = await response.json();
+
+  if (!response.ok) throw new Error(json?.error || "Échec de l'upload du fichier.");
+  return json.url as string;
+}
+
 export default function ContactPage() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const [fileName, setFileName] = useState(""); // affichage du nom du fichier
+  const [fileName, setFileName] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,18 +33,17 @@ export default function ContactPage() {
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    // honeypot anti-spam
-    const hp = (form.querySelector('input[name="website"]') as HTMLInputElement)?.value || "";
-    if (hp) {
+    const honeypot = (form.querySelector('input[name="website"]') as HTMLInputElement)?.value;
+    if (honeypot) {
       setStatus("success");
       return;
     }
 
-    // 1) Upload fichier → Cloudinary
     const fileInput = form.querySelector('input[name="plan"]') as HTMLInputElement | null;
     const file = fileInput?.files?.[0] ?? null;
 
-    let planUrl = "";
+    data.delete("plan");
+
     if (file) {
       if (!ALLOWED_TYPES.includes(file.type)) {
         setStatus("error");
@@ -45,49 +56,40 @@ export default function ContactPage() {
         return;
       }
 
-      const up = new FormData();
-      up.append("file", file);
-
-      const upRes = await fetch("/api/upload", { method: "POST", body: up });
-      const upJson = await upRes.json();
-
-      if (!upRes.ok) {
+      try {
+        const planUrl = await uploadFile(file);
+        data.append("plan_url", planUrl);
+      } catch (error) {
         setStatus("error");
-        setErrorMsg(upJson?.error || "Échec de l’upload du fichier.");
+        setErrorMsg(error instanceof Error ? error.message : "Échec de l'upload.");
         return;
       }
-      planUrl = upJson.url as string;
     }
 
-    // 2) Envoi Formspree sans le fichier
-    data.delete("plan");
-    if (planUrl) data.append("plan_url", planUrl);
-
     try {
-      const fsRes = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: data,
       });
-      const json = await fsRes.json();
+      const json = await response.json();
 
-      if (fsRes.ok) {
+      if (response.ok) {
         setStatus("success");
         form.reset();
         setFileName("");
       } else {
         setStatus("error");
-        setErrorMsg(json?.errors?.[0]?.message || `Erreur ${fsRes.status}.`);
+        setErrorMsg(json?.errors?.[0]?.message || `Erreur ${response.status}.`);
       }
     } catch {
       setStatus("error");
-      setErrorMsg("Impossible d’envoyer le message. Réessayez.");
+      setErrorMsg("Impossible d'envoyer le message. Réessayez.");
     }
   }
 
   return (
     <>
-      {/* Déclencheur de l'animation au chargement */}
       <PageReveal />
 
       <section className="container reveal" style={{ padding: "40px 0" }}>
@@ -97,8 +99,9 @@ export default function ContactPage() {
           </h1>
 
           <p style={{ color: "var(--text-muted)", marginBottom: 24 }}>
-            Vous avez un projet ou souhaitez obtenir un devis ? Remplissez le formulaire ci-dessous
-            (vous pouvez joindre votre plan en PDF/JPG/PNG) ou contactez-nous directement par téléphone.
+            Vous avez un projet ou souhaitez obtenir un devis ? Remplissez le formulaire
+            ci-dessous (vous pouvez joindre votre plan en PDF/JPG/PNG) ou contactez-nous
+            directement par téléphone.
           </p>
 
           <div
@@ -110,29 +113,19 @@ export default function ContactPage() {
               alignItems: "start",
             }}
           >
-            {/* FORMULAIRE */}
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ display: "none" }} />
 
               <input className="input" type="text" name="name" placeholder="Votre nom *" required />
               <input className="input" type="email" name="email" placeholder="Votre e-mail *" required />
               <input className="input" type="tel" name="phone" placeholder="Votre téléphone" />
-              <textarea className="input" name="message" rows={5} placeholder="Votre message *" required></textarea>
+              <textarea className="input" name="message" rows={5} placeholder="Votre message *" required />
 
-              {/* 📎 Champ fichier stylé */}
               <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontWeight: 600,
-                    marginBottom: 10,
-                    color: "var(--brand)",
-                  }}
-                >
+                <label style={{ display: "block", fontWeight: 600, marginBottom: 10, color: "var(--brand)" }}>
                   Joindre un plan (PDF/JPG/PNG)
                 </label>
 
-                {/* Input caché */}
                 <input
                   id="plan-input"
                   type="file"
@@ -142,39 +135,18 @@ export default function ContactPage() {
                   onChange={(e) => setFileName(e.target.files?.[0]?.name || "")}
                 />
 
-                {/* Bouton vert stylé */}
-                <label
-                  htmlFor="plan-input"
-                  style={{
-                    display: "inline-block",
-                    padding: "10px 18px",
-                    backgroundColor: "var(--brand)",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    transition: "background-color 0.2s ease",
-                    fontWeight: 500,
-                  }}
-                  onMouseOver={(e) =>
-                    ((e.target as HTMLElement).style.backgroundColor = "#298e5f")
-                  }
-                  onMouseOut={(e) =>
-                    ((e.target as HTMLElement).style.backgroundColor = "var(--brand)")
-                  }
-                >
+                <label htmlFor="plan-input" className="btn btn--primary" style={{ cursor: "pointer" }}>
                   Choisir un fichier
                 </label>
 
-                {/* Nom du fichier sélectionné */}
                 {fileName && (
-                  <div style={{ fontSize: ".9rem", color: "var(--text-muted)", marginTop: 6 }}>
+                  <p style={{ fontSize: ".9rem", color: "var(--text-muted)", marginTop: 6 }}>
                     {fileName}
-                  </div>
+                  </p>
                 )}
-
-                <div style={{ fontSize: ".9rem", color: "var(--text-muted)", marginTop: 6 }}>
+                <p style={{ fontSize: ".9rem", color: "var(--text-muted)", marginTop: 6 }}>
                   Taille max : 10 Mo
-                </div>
+                </p>
               </div>
 
               <input type="hidden" name="_subject" value="Nouveau message - Plâtrerie Voltz" />
@@ -184,11 +156,14 @@ export default function ContactPage() {
                 {status === "sending" ? "Envoi..." : "Envoyer"}
               </button>
 
-              {status === "success" && <p className="alert success">✅ Merci ! Votre message a bien été envoyé.</p>}
-              {status === "error" && <p className="alert error">❌ {errorMsg}</p>}
+              {status === "success" && (
+                <p className="alert success">✅ Votre message a bien été envoyé.</p>
+              )}
+              {status === "error" && (
+                <p className="alert error">❌ {errorMsg}</p>
+              )}
             </form>
 
-            {/* INFOS */}
             <div>
               <h2 style={{ fontSize: "1.1rem", color: "var(--brand)" }}>Nos coordonnées</h2>
               <p style={{ marginTop: 10, color: "var(--text-muted)", lineHeight: 1.7 }}>
