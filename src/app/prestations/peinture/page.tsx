@@ -4,7 +4,6 @@ import ServiceTemplate from "@/components/ServiceTemplate";
 export default function PeinturePage() {
   return (
     <>
-      {/* Déclenche l’animation au chargement */}
       <PageReveal />
 
       <div className="reveal">
@@ -21,8 +20,6 @@ export default function PeinturePage() {
             "Finitions soignées et durables",
             "Conseils sur le choix des teintes",
           ]}
-
-          /*ton image */
           heroImageUrl="/prestation/peinture.jpg"
         />
       </div>

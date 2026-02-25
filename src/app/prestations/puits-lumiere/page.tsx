@@ -4,7 +4,6 @@ import ServiceTemplate from "@/components/ServiceTemplate";
 export default function PuitsLumierePage() {
   return (
     <>
-      {/* Déclenche l’animation au chargement */}
       <PageReveal />
 
       <div className="reveal">
@@ -21,8 +20,6 @@ export default function PuitsLumierePage() {
             "Conception adaptée à chaque pièce",
             "Intégration possible dans plafonds staff",
           ]}
-
-          /*ton image */
           heroImageUrl="/prestation/led.jpg"
         />
       </div>

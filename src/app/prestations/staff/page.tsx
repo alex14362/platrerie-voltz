@@ -4,7 +4,6 @@ import ServiceTemplate from "@/components/ServiceTemplate";
 export default function StaffPage() {
   return (
     <>
-      {/* Déclenche l’animation au chargement */}
       <PageReveal />
 
       <div className="reveal">
@@ -21,10 +20,7 @@ export default function StaffPage() {
             "Respect du style architectural existant",
             "Possibilité d’intégrer un éclairage indirect",
           ]}
-
-          /* 👇 Ajoute ici le chemin vers ton image */
           heroImageUrl="/prestation/staff.jpg"
-        
         />
       </div>
     </>

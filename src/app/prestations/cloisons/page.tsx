@@ -4,7 +4,6 @@ import ServiceTemplate from "@/components/ServiceTemplate";
 export default function CloisonsPage() {
   return (
     <>
-      {/* Déclenche l’animation au chargement */}
       <PageReveal />
 
       <div className="reveal">
@@ -21,8 +20,6 @@ export default function CloisonsPage() {
             "Pose sur ossature métallique ou bois",
             "Finitions soignées et prêtes à peindre",
           ]}
-
-          /*ton image */
           heroImageUrl="/prestation/cloison.jpg"
         />
       </div>

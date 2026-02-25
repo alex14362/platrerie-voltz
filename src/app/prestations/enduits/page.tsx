@@ -4,7 +4,6 @@ import ServiceTemplate from "@/components/ServiceTemplate";
 export default function EnduitsPage() {
   return (
     <>
-      {/* Déclenche l’animation au chargement */}
       <PageReveal />
 
       <div className="reveal">
@@ -21,8 +20,6 @@ export default function EnduitsPage() {
             "Surfaces prêtes à peindre",
             "Rendu lisse et sans défauts",
           ]}
-
-          /*ton image */
           heroImageUrl="/prestation/finition.jpg"
         />
       </div>
