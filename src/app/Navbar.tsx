@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 
 const NAV = [
   { label: "Accueil", href: "/" },
@@ -26,45 +26,48 @@ const SERVICES = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-
-  // Dropdown desktop
   const [hoverOpen, setHoverOpen] = useState(false);
+
   const timer = useRef<NodeJS.Timeout | null>(null);
 
-  const openMenu = () => {
+  const showDropdown = () => {
     if (timer.current) clearTimeout(timer.current);
     setHoverOpen(true);
   };
 
-  const closeMenu = () => {
+  const hideDropdown = () => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setHoverOpen(false), 120);
   };
 
+  const toggleMobileMenu = () => {
+    setOpen((v) => !v);
+    setServicesOpen(false);
+  };
+
+  const closeMobileMenu = () => setOpen(false);
+
   return (
     <header className="site-header">
       <div className="container site-header__inner">
-        {/* Logo */}
         <Link href="/" className="brand">
           <Image src="/logo.png" alt="Plâtrerie Voltz" width={40} height={40} />
           <span>Plâtrerie Voltz</span>
         </Link>
 
-        {/* NAV DESKTOP */}
         <nav className="nav nav-desktop">
           {NAV.map((item) =>
             item.label === "Prestations" ? (
               <div
-                key="prestations"
+                key={item.href}
                 className="dropdown"
-                onMouseEnter={openMenu}
-                onMouseLeave={closeMenu}
+                onMouseEnter={showDropdown}
+                onMouseLeave={hideDropdown}
               >
                 <Link href="/prestations" className="dropdown__btn">
                   Prestations ▾
                 </Link>
 
-                {/* SUBMENU DESKTOP */}
                 <div
                   className="submenu"
                   style={{
@@ -93,26 +96,18 @@ export default function Navbar() {
           )}
         </nav>
 
-        {/* BURGER MOBILE */}
-        <button
-          className="burger-mobile"
-          onClick={() => {
-            setOpen(!open);
-            setServicesOpen(false);
-          }}
-          aria-label="Ouvrir le menu"
-        >
+        <button className="burger-mobile" onClick={toggleMobileMenu} aria-label="Ouvrir le menu">
           ☰
         </button>
       </div>
 
-      {/* MENU MOBILE */}
       {open && (
         <div className="mobile-menu">
           <div className="container">
             <button
               className="mobile-item mobile-prestations"
-              onClick={() => setServicesOpen(!servicesOpen)}
+              onClick={() => setServicesOpen((v) => !v)}
+              type="button"
             >
               Prestations {servicesOpen ? "▴" : "▾"}
             </button>
@@ -121,13 +116,13 @@ export default function Navbar() {
               <ul className="mobile-sub">
                 {SERVICES.map((s) => (
                   <li key={s.href}>
-                    <Link href={s.href} onClick={() => setOpen(false)}>
+                    <Link href={s.href} onClick={closeMobileMenu}>
                       {s.label}
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <Link href="/prestations" onClick={() => setOpen(false)}>
+                  <Link href="/prestations" onClick={closeMobileMenu}>
                     → Toutes les prestations
                   </Link>
                 </li>
@@ -135,12 +130,7 @@ export default function Navbar() {
             )}
 
             {NAV.filter((n) => n.label !== "Prestations").map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="mobile-item"
-              >
+              <Link key={item.href} href={item.href} onClick={closeMobileMenu} className="mobile-item">
                 {item.label}
               </Link>
             ))}
