@@ -1,19 +1,28 @@
 # Plâtrerie Voltz — Site vitrine
 
-Site vitrine professionnel
+Professional website built for a local plastering company in Bas-Rhin (France).
 
-## Demo
+## Live Demo
 
-[platrerie-voltz-z2jg.vercel.app](https://platrerie-voltz-z2jg.vercel.app)
+https://platrerie-voltz-z2jg.vercel.app
 
-## Pages
+## Features
 
-- **Accueil** — Présentation générale
-- **Prestations** — Plâtrerie, cloisons, isolation, peinture, puits de lumière
-- **Réalisations** — Galerie photo
-- **Contact** — Formulaire de contact
+- Responsive design (desktop & mobile)
+- Services pages with reusable template
+- Photo gallery with lightbox
+- Smooth page transitions
+- Contact section
 
-## Technologies utilisées
+## Tech Stack
 
-- Next.js, TypeScript, Tailwind CSS, Cloudinary, Vercel
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Vercel (deployment)
 
+## Run locally
+
+```bash
+npm install
+npm run dev
